@@ -11,6 +11,7 @@ Among the 10000, most of the wiki documents only have 1 question, the top-10 wik
 
 File **dataset\gold_train_file_sample_selected.json** is an updated version of dataset\train_file_sample_selected.json. The text-version gold answer (based on the human-annotated ground truth, which is specified under field `annotations`) can be find in field `gold_answer`.
 
+⚠️ The Final Test File: **dataset\gold_test_file_30.json**
 
 > Top 10 document with most questions
 > - https://en.wikipedia.org//w/index.php?title=List_of_Super_Bowl_champions&amp;oldid=834538879: 4 questions
