@@ -1,6 +1,7 @@
 import json
 from collections import Counter
 import os
+import random
 
 NQ_dataset_path = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "dataset", "simplified-nq-train.jsonl")
@@ -118,6 +119,67 @@ def format_test_dataset(url_count_filename, input_file,output_file):
     print(f"Organized dataset for top 10 document URLs saved to {output_file}")
 
 
+def has_valid_annotation(entry):
+    for annotation in entry.get("annotations", []):
+        long_ans = annotation.get("long_answer", {})
+        short_ans = annotation.get("short_answers", [])
+
+        valid_long = long_ans.get("start_token", -1) != -1 and long_ans.get("end_token", -1) != -1
+        valid_short = any("start_token" in ans and "end_token" in ans for ans in short_ans)
+
+        if valid_long or valid_short:
+            return True
+    return False
+
+
+def get_test_dataset(filename,output_filename,dataset_size):
+    
+    with open(filename, "r") as f:
+        data = json.load(f)
+    
+    print("Start Filtering questions with no gold answer")
+    #Filter valid samples: has gold answer 
+    valid_samples = [entry for entry in data if has_valid_annotation(entry)]
+    print(f"{len(valid_samples)} has gold answers")
+
+    print(f"Start Random selecting {dataset_size} samples")
+    unique_doc_map = {}
+    for sample in valid_samples:
+        doc_url = sample.get("document_url")
+        if doc_url not in unique_doc_map:
+            unique_doc_map[doc_url] = sample
+    
+    # Randomly {dataset_size} sample  with unique document_url
+    unique_samples = list(unique_doc_map.values())
+    if len(unique_samples) < dataset_size:
+        raise ValueError("Not enough unique document_url entries with valid annotations.")
+
+    sampled = random.sample(unique_samples, dataset_size)
+    
+    #Saved to output file
+    with open(output_filename, "w") as f:
+        json.dump(sampled, f, indent=2)
+    
+
+
+def get_N_sample_from_file(in_filename,dataset_size,output_filename):
+    
+    with open(in_filename, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    
+    if len(data) < dataset_size:
+        raise ValueError(f"Only {len(data)} items in the file, but you asked for {N}.")
+
+    sampled_data = random.sample(data, dataset_size)
+    
+    # Save the sampled objects into a new file
+    with open(output_filename, "w") as f:
+        json.dump(sampled_data, f, indent=2)
+
+    print(f"Successfully saved {dataset_size} random samples to file {output_filename}")
+
+    
+
 def test_get_first_n_elements(n):
     #n=100
     get_first_n_elements(NQ_dataset_path, f"train_file_sample_{n}.json",n)
@@ -147,4 +209,27 @@ def test_format_test_dataset():
     format_test_dataset(url_count_filename, input_file,output_file)
     
 
-test_format_test_dataset()
+def test_get_test_dataset():
+    
+    dataset_size = 100
+    input_file = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "dataset", 'train_file_sample_10000.json')
+    )
+    output_file = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "dataset", f'test_file_{dataset_size}.json')
+    )
+    
+    get_test_dataset(input_file,output_file,dataset_size)
+
+def test_get_N_sample_from_file():
+    
+    dataset_size = 30
+    input_file = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "dataset", 'gold_test_file_100.json')
+    )
+    output_file = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "dataset", f'gold_test_file_{dataset_size}.json')
+    )
+    get_N_sample_from_file(input_file,dataset_size,output_file)
+
+test_get_N_sample_from_file()
