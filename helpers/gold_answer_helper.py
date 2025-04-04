@@ -21,14 +21,14 @@ def get_all_gold_answers(input_path, output_path):
         tokens = eachDoc['document_text'].split() 
         
         #gind gold answer for each question
-        for eachQuestion in eachDoc["questions"]:
-            gold_long_answer,gold_short_answers = extract_gold_answer_for_question(tokens,eachQuestion)
-            
-            # Append to question
-            eachQuestion["gold_answer"] = {
-                "long_answer": gold_long_answer,
-                "short_answers": gold_short_answers
-            }
+        eachAnnotation =  eachDoc['annotations']
+        gold_long_answer,gold_short_answers = extract_gold_answer_for_question(tokens,eachAnnotation)
+        
+        # Append to question
+        eachDoc["gold_answer"] = {
+            "long_answer": gold_long_answer,
+            "short_answers": gold_short_answers
+        }
     
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(all_docs, f, indent=2, ensure_ascii=False)
@@ -36,9 +36,9 @@ def get_all_gold_answers(input_path, output_path):
     print(f" Gold answers of {input_path} added and saved to {output_path}.")
     
 
-def extract_gold_answer_for_question(tokens,in_question):
+def extract_gold_answer_for_question(tokens,in_annotation):
     
-    annotation = in_question['annotations'][0] if in_question.get('annotations') else {}
+    annotation = in_annotation[0] if in_annotation[0] else {}
         
     # Long Answer
     long_answer = None
@@ -64,12 +64,12 @@ def extract_gold_answer_for_question(tokens,in_question):
 
 def test_get_all_gold_answers():
     
-    test_file_name = 'train_file_sample_selected.json'
+    test_file_name = 'test_file_100.json'
     test_file_name = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..", "dataset", test_file_name)
     )
     
-    output_file = 'gold_train_file_sample_selected.json'
+    output_file = 'gold_test_file_100.json'
     output_file = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..", "dataset",output_file)
     )
