@@ -162,15 +162,20 @@ def get_test_dataset(filename,output_filename,dataset_size):
     
 
 
-def get_N_sample_from_file(in_filename,dataset_size,output_filename):
+def get_N_sample_from_file(in_filename,dataset_size,output_filename,max_gold_length=2000):
     
     with open(in_filename, "r", encoding="utf-8") as f:
         data = json.load(f)
+        
+    filtered_data = [
+        item for item in data
+        if len(item.get("gold_answer", {}).get("long_answer", "")) <= max_gold_length
+    ]
     
-    if len(data) < dataset_size:
-        raise ValueError(f"Only {len(data)} items in the file, but you asked for {N}.")
+    if len(filtered_data) < dataset_size:
+        raise ValueError(f"Only {len(filtered_data)} items in the file, but you asked for {dataset_size}.")
 
-    sampled_data = random.sample(data, dataset_size)
+    sampled_data = random.sample(filtered_data, dataset_size)
     
     # Save the sampled objects into a new file
     with open(output_filename, "w") as f:
