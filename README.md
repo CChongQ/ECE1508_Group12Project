@@ -40,8 +40,8 @@ This project explored 4 RAG piplines:
 
 ### Two-Stage RAG 1
 
-Stage 1 code file: **xxx**, the `FAISS` vector store created in this stage is stored in the folder **L1_vector**.
-Stage 2 code file: **Sentence_Window_Complete.ipynb**
+Stage 1 code file: **xxx**, the `FAISS` vector store created in this stage is stored in the folder **.\L1_vector**.  
+Stage 2 code file: **.\Sentence_Window_Complete.ipynb**
 
 ### Two-Stage RAG 2
 
