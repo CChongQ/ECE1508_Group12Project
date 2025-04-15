@@ -24,3 +24,25 @@ File **dataset\gold_train_file_sample_selected.json** is an updated version of d
 > - https://en.wikipedia.org//w/index.php?title=History_of_Delhi&amp;oldid=855200091: 3 questions
 > - https://en.wikipedia.org//w/index.php?title=Atlanta_Falcons&amp;oldid=833386951: 3 questions
 > - https://en.wikipedia.org//w/index.php?title=Abundance_of_elements_in_Earth%27s_crust&amp;oldid=801283417: 3 questions
+
+## RAG Piplines
+
+This project explored 4 RAG piplines:
+
+1. Baseline RAG 1: using Fixed-Size Chunking
+2. Baseline RAG 2: using Structured-Based Chunking
+3. Two-Stage RAG 1: using Structured-Based Chunking + Sentence Window Chunking
+4. Two-Stage RAG 2: using Structured-Based Chunking + Proposition Chunking
+
+### Baseline RAG 1
+
+### Baseline RAG 2
+
+### Two-Stage RAG 1
+
+Stage 1 code file: **xxx**, the `FAISS` vector store created in this stage is stored in the folder **L1_vector**.
+Stage 2 code file: **Sentence_Window_Complete.ipynb**
+
+### Two-Stage RAG 2
+
+## Test
