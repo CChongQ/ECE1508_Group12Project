@@ -22,11 +22,11 @@ This project explored 4 RAG piplines:
 Fxied Size Chunking using `RecursiveCharacterTextSplitter` in **.\Baseline_1.ipynb**
 
 ### Baseline RAG 2
-
+Structured Chunking in **.\Structure_Based.ipynb**
 ### Two-Stage RAG 1
 
 Stage 1 rely on the structured chunking.    
-Stage 2 code file: **.\Sentence_Window_Complete.ipynb**
+Stage 2 code using **sentence window** in **.\Sentence_Window_Complete.ipynb**
 
 ### Two-Stage RAG 2
 Stage 1 rely on the structured chunking.    
