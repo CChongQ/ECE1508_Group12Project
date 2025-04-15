@@ -25,11 +25,11 @@ Fxied Size Chunking using `RecursiveCharacterTextSplitter` in **.\Baseline_1.ipy
 
 ### Two-Stage RAG 1
 
-Stage 1 code file: **xxx**, the `FAISS` vector store created in this stage is stored in the folder **.\L1_vector_final**.  
+Stage 1 rely on the structured chunking.    
 Stage 2 code file: **.\Sentence_Window_Complete.ipynb**
 
 ### Two-Stage RAG 2
-Stage 1 rely on teh structured chunking.  
+Stage 1 rely on the structured chunking.    
 Stage 2 code using **proposition** in **.\Proposition_Light.ipynb**
 
 ## Evaluataion
