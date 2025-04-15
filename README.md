@@ -5,25 +5,8 @@
 
 Kaggle has example preview: https://www.kaggle.com/datasets/validmodel/the-natural-questions-dataset
 
-The original simplified train file (dataset\simplified-nq-train.jsonl) is super large, don't open it. Its first 10000 questions are stored in **dataset\train_file_sample_10000.json**.
-
-Among the 10000, most of the wiki documents only have 1 question, the top-10 wiki documents with most questions have been formatted and stored in **dataset\train_file_sample_selected.json**. `Please use this file for furhter processing!`
-
-File **dataset\gold_train_file_sample_selected.json** is an updated version of dataset\train_file_sample_selected.json. The text-version gold answer (based on the human-annotated ground truth, which is specified under field `annotations`) can be find in field `gold_answer`.
-
 ⚠️ The Final Test File: **dataset\gold_test_file_30.json**
 
-> Top 10 document with most questions
-> - https://en.wikipedia.org//w/index.php?title=List_of_Super_Bowl_champions&amp;oldid=834538879: 4 questions
-> - https://en.wikipedia.org//w/index.php?title=England_at_the_FIFA_World_Cup&amp;oldid=853673134: 4 questions
-> - https://en.wikipedia.org//w/index.php?title=Maze_Runner:_The_Death_Cure&amp;oldid=828322653: 3 questions
-> - https://en.wikipedia.org//w/index.php?title=England_at_the_FIFA_World_Cup&amp;oldid=856208693: 3 questions
-> - https://en.wikipedia.org//w/index.php?title=Cinco_de_Mayo&amp;oldid=842489882: 3 questions
-> - https://en.wikipedia.org//w/index.php?title=Great_Pyramid_of_Giza&amp;oldid=800811421: 3 questions
-> - https://en.wikipedia.org//w/index.php?title=IPhone_6&amp;oldid=851904769: 3 questions
-> - https://en.wikipedia.org//w/index.php?title=History_of_Delhi&amp;oldid=855200091: 3 questions
-> - https://en.wikipedia.org//w/index.php?title=Atlanta_Falcons&amp;oldid=833386951: 3 questions
-> - https://en.wikipedia.org//w/index.php?title=Abundance_of_elements_in_Earth%27s_crust&amp;oldid=801283417: 3 questions
 
 ## RAG Piplines
 
@@ -36,6 +19,8 @@ This project explored 4 RAG piplines:
 
 ### Baseline RAG 1
 
+Fxied Size Chunking using `RecursiveCharacterTextSplitter` in **.\Baseline_1.ipynb**
+
 ### Baseline RAG 2
 
 ### Two-Stage RAG 1
@@ -44,5 +29,11 @@ Stage 1 code file: **xxx**, the `FAISS` vector store created in this stage is st
 Stage 2 code file: **.\Sentence_Window_Complete.ipynb**
 
 ### Two-Stage RAG 2
+Stage 1 rely on teh structured chunking.
+Stage 2 code using **proposition** in **.\Proposition_Light.ipynb**
 
-## Test
+## Evaluataion
+
+The code to calcualte the four evaluation criterias' score, generate complete evaluation result, including score distribution plot, mean value analysis and two question-type specific analysis in **.\Evaluation.ipynb**.
+
+The detail evaluation result with detail output of each step(e.g. retrieved content and RAG generator's response to each question) can be find in folder **.\evaluation**
